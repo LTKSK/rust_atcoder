@@ -1,3 +1,9 @@
+use proconio::input;
+
 fn main() {
-    todo!();
+    input! {
+        n: usize,
+        s: usize,
+        a: [usize; n]
+    };
 }

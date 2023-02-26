@@ -13,16 +13,15 @@ fn main() {
     // 現在の重さの合計値がindexとして表現されるところがちょっと難しい
     let mut dp = vec![vec![0; W + 1]; n + 1];
     dp[0][0] = 0;
-    for i in 1..=n {
-        let (w, v) = wv[i - 1];
+    for (i, (w, v)) in wv.iter().enumerate() {
         for j in 0..=W {
-            if j < w {
+            if j < *w {
                 // こっちは重さwがoverしている場合。その場合は一つ前の配列の値をそのまま採用する
-                dp[i][j] = dp[i - 1][j];
+                dp[i + 1][j] = dp[i][j];
             } else {
                 // wが入る場合、最大値を採用したい。そうすると一つ前の値dp[i-1]の配列のjにある値と、jから現在の重さを足してv足したもののうち、大きい方を採用する
                 // 後者はWからwを引いてvを加算するという計算そのまんま
-                dp[i][j] = dp[i - 1][j].max(dp[i - 1][j - w] + v);
+                dp[i + 1][j] = dp[i][j].max(dp[i][j - w] + v);
             }
         }
     }
